@@ -1,0 +1,10 @@
+{% extends "Tol/base.html" %}
+{% block title %} Home page {%endblock%}
+{% block content %}
+<form name="form" method="POST" action="#">
+    {% csrf_token %}
+    <button type="submit" name="start" id="start" value="start" class="button">
+        Start Tol
+    </button>
+</form>
+{% endblock %}

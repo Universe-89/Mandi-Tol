@@ -1,0 +1,67 @@
+{% extends "Tol/base.html" %}
+{% block title %} Home page {%endblock%}
+{% block script %}
+<script>
+    function incrementValue()
+    {
+        var value = parseInt(document.getElementById('number').value, 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        document.getElementById('number').value = value;
+    }
+</script>
+{%endblock%}
+{% block content %}
+<form name="form" method="POST" action="#">
+    {% csrf_token %}
+    <fieldset class="form-group">
+    {% comment %} # kissan ka name {% endcomment %}
+		<div class="row">
+			<legend class="col-form-label col-sm-2 pt-0">Name</legend>
+			<div class="col-sm-10">
+				<div class="form-check-inline">
+					<input type="text" name="name" id="name" required />
+				</div>
+			</div>
+		</div>
+        {% comment %} item name {% endcomment %}
+        <div class="row">
+			<legend class="col-form-label col-sm-2 pt-0">Item</legend>
+			<div class="col-sm-10">
+				<div class="form-check-inline">
+					<input type="text" name="item_name" id="item_name" required />
+				</div>
+			</div>
+		</div>
+    {% comment %} # rate {% endcomment %}
+    <div class="row">
+        <legend class="col-form-label col-sm-2 pt-0">Rate</legend>
+        <div class="col-sm-10">
+            <div class="form-check-inline">
+                <input type="number" name="rate" id="rate" required />
+            </div>
+        </div>
+    </div>
+
+    {% comment %} # standard bharti {% endcomment %}
+
+    <div class="row">
+        <legend class="col-form-label col-sm-2 pt-0">Standard Bharti</legend>
+        <div class="col-sm-10">
+            <div class="form-check-inline">
+                <input type="number" name="bharti" id="bharti" required />
+            </div>
+        </div>
+    </div>
+
+    {% comment %} # plus button {% endcomment %}
+    <input type="text" ame="bags" id="bags" value="0"/>
+    <input type="button" onclick="incrementValue()" value="Increase" />
+
+</fieldset>
+
+    <button type="submit" name="submit" id="submit" value="submit" class="button">
+        End Toll
+    </button>
+</form>
+{% endblock %}
