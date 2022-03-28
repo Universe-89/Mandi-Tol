@@ -4,10 +4,10 @@
 <script>
     function incrementValue()
     {
-        var value = parseInt(document.getElementById('number').value, 10);
+        var value = parseInt(document.getElementById('bags').value, 10);
         value = isNaN(value) ? 0 : value;
         value++;
-        document.getElementById('number').value = value;
+        document.getElementById('bags').value = value;
     }
 </script>
 {%endblock%}
