@@ -20,9 +20,9 @@ def data(response):
             info.item_name         = response.POST.get("item_name")
             info.rate              = response.POST.get("rate")
             count                  = response.POST.get("totalGaadi")
-            countInteger = int(count) - 1
+            countInteger = int(count) 
             info.bags  = 0
-            while(countInteger>=0):
+            while(countInteger>0):
                 info.bags = info.bags + int(response.POST.get("bags" + str(countInteger)))
                 countInteger = countInteger - 1
 
@@ -39,10 +39,10 @@ def data(response):
             info.item_name         = response.POST.get("item_name")
             info.rate              = response.POST.get("rate")
             count                  = response.POST.get("totalGaadi")
-            countInteger = int(count) - 1
+            countInteger = int(count)
             copy_count = countInteger
             info.bags  = 0
-            while(countInteger>=0):
+            while(countInteger>0):
                 info.bags = info.bags + int(response.POST.get("bags" + str(countInteger)))
                 countInteger = countInteger - 1
 
