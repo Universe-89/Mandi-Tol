@@ -65,12 +65,15 @@
         document.getElementById("driverName" + del).disabled = true;
         document.getElementById("bags" + del).readOnly  = true; {% endcomment %}
         
-        driverCount = driverCount + 1;
+        
         console.log("546789975678966578434567890");
         console.log(driverCount);
 
         document.getElementById("addBut").style.display = "none";  
+        
         document.getElementById("totalGaadi").value = driverCount + 1;
+
+        driverCount = driverCount + 1;
 
 
         var foo = document.getElementById("allForm");
