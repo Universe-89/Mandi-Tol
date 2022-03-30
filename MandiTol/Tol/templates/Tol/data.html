@@ -1,64 +1,141 @@
 {% extends "Tol/base.html" %}
 {% block title %} Home page {%endblock%}
 {% block script %}
+
 <script>
-    function incrementValue()
-    {
-        var value = parseInt(document.getElementById('bags').value, 10);
+    var driverCount = 1;
+
+    function incrementValue(driverCount) {
+        let count = driverCount - 1;
+        var value = parseInt(document.getElementById('bags' + count).value, 10);
         value = isNaN(value) ? 0 : value;
-        value++;
-        document.getElementById('bags').value = value;
+        var capa = parseInt(document.getElementById('capacity'+count).value,10);
+        if(value<capa) {
+            value++;
+            document.getElementById('bags' + count).value = value;
+        }
+        else{
+            // document.getElementById("bags" + count).disabled = true;
+            document.getElementById("increse" + count).disabled = true;
+            document.getElementById("driverName" + count).disabled = true;
+            document.getElementById("capacity"+ count).disabled = true;
+        }
+        
+        
+
+        document.getElementById("totalGaadi").value = count;
+    }
+
+    function add() {
+
+        //Create an input type dynamically.
+        var driverName = document.createElement("input");
+        var counter = document.createElement("input");
+        var incrementButton = document.createElement("input");
+        var capacity    =   document.createElement("input") 
+
+        //Assign different attributes to the element.
+        driverName.setAttribute("type", "text");
+        driverName.setAttribute("name", "text");
+        driverName.setAttribute("id", "driverName" + driverCount);
+
+
+        counter.setAttribute("type", "number");
+        counter.setAttribute("name", "bags" + driverCount);
+        counter.setAttribute("id", "bags" + driverCount);
+        counter.setAttribute("value", "0");
+
+        incrementButton.setAttribute("type", "button");
+        incrementButton.setAttribute("name", "increse");
+        incrementButton.setAttribute("id", "increse" + driverCount);
+        incrementButton.setAttribute("value", "increse");
+        incrementButton.setAttribute("onclick", "incrementValue(driverCount)");
+
+        capacity.setAttribute("type", "number");
+        capacity.setAttribute("name", "capacity")
+        capacity.setAttribute("id", "capacity"+driverCount);
+        capacity.setAttribute("value", "0");
+
+        if (driverCount > 1) {
+            var del = driverCount - 1;
+            document.getElementById("bags" + del).disabled = true;
+            document.getElementById("increse" + del).disabled = true;
+            document.getElementById("driverName" + del).disabled = true;
+        }
+        
+        driverCount = driverCount + 1;
+        console.log("546789975678966578434567890");
+        console.log(driverCount);
+
+
+
+        var foo = document.getElementById("allForm");
+
+        //Append the element in page (in span).
+        foo.appendChild(driverName);
+        foo.appendChild(counter);
+        foo.appendChild(incrementButton);
+        foo.appendChild(capacity)
+
+
     }
 </script>
 {%endblock%}
 {% block content %}
-<form name="form" method="POST" action="#">
+<form name="form" id="allForm" method="POST" action="#">
     {% csrf_token %}
-    <fieldset class="form-group">
-    {% comment %} # kissan ka name {% endcomment %}
-		<div class="row">
-			<legend class="col-form-label col-sm-2 pt-0">Name</legend>
-			<div class="col-sm-10">
-				<div class="form-check-inline">
-					<input type="text" name="name" id="name" required />
-				</div>
-			</div>
-		</div>
+    <fieldset class="form-group" >
+        {% comment %} # kissan ka name {% endcomment %}
+        <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Name</legend>
+            <div class="col-sm-10">
+                <div class="form-check-inline">
+                    <input type="text" name="name" id="name" required />
+                </div>
+            </div>
+        </div>
         {% comment %} item name {% endcomment %}
         <div class="row">
-			<legend class="col-form-label col-sm-2 pt-0">Item</legend>
-			<div class="col-sm-10">
-				<div class="form-check-inline">
-					<input type="text" name="item_name" id="item_name" required />
-				</div>
-			</div>
-		</div>
-    {% comment %} # rate {% endcomment %}
-    <div class="row">
-        <legend class="col-form-label col-sm-2 pt-0">Rate</legend>
-        <div class="col-sm-10">
-            <div class="form-check-inline">
-                <input type="number" name="rate" id="rate" required />
+            <legend class="col-form-label col-sm-2 pt-0">Item</legend>
+            <div class="col-sm-10">
+                <div class="form-check-inline">
+                    <input type="text" name="item_name" id="item_name" required />
+                </div>
             </div>
         </div>
-    </div>
-
-    {% comment %} # standard bharti {% endcomment %}
-
-    <div class="row">
-        <legend class="col-form-label col-sm-2 pt-0">Standard Bharti</legend>
-        <div class="col-sm-10">
-            <div class="form-check-inline">
-                <input type="number" name="bharti" id="bharti" required />
+        {% comment %} # rate {% endcomment %}
+        <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Rate</legend>
+            <div class="col-sm-10">
+                <div class="form-check-inline">
+                    <input type="number" name="rate" id="rate" required />
+                </div>
             </div>
         </div>
-    </div>
 
-    {% comment %} # plus button {% endcomment %}
-    <input type="text" ame="bags" id="bags" value="0"/>
-    <input type="button" onclick="incrementValue()" value="Increase" />
+        {% comment %} # standard bharti {% endcomment %}
 
-</fieldset>
+        <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Standard Bharti</legend>
+            <div class="col-sm-10">
+                <div class="form-check-inline">
+                    <input type="number" name="bharti" id="bharti" required />
+                </div>
+            </div>
+        </div>
+
+
+
+        {% comment %} # plus button {% endcomment %}
+        {% comment %} <input type="number" name="bags" id="bags" value="0" />
+        <input type="button" onclick="incrementValue()" value="Increase" />
+        <button type="button" onclick="createNewElement()">add</button> {% endcomment %}
+        <input type="button" value="Add" onclick="add()" />
+        {% comment %} <span id="fooBar">&nbsp;</span> {% endcomment %}
+
+        <input type = "number" name = "totalGaadi" id = "totalGaadi" value = "0"/>
+
+    </fieldset>
 
     <button type="submit" name="submit" id="submit" value="submit" class="button">
         End Toll

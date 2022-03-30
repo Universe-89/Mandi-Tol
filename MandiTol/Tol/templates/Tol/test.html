@@ -1,0 +1,76 @@
+<HTML>
+    <HEAD>
+    <TITLE>Dynamically add Textbox, Radio, Button in html Form using JavaScript</TITLE>
+    <SCRIPT language="javascript">
+
+    var driverCount = 1;
+
+    function incrementValue(driverCount)
+    {
+        let count = driverCount - 1;
+        var value = parseInt(document.getElementById('bags' + count).value, 10);
+        value = isNaN(value) ? 0 : value;
+        value++;
+        document.getElementById('bags' + count).value = value;
+    }
+    function add() {
+    
+        //Create an input type dynamically.
+        var driverName = document.createElement("input");
+        var counter = document.createElement("input");
+        var incrementButton = document.createElement("input");
+    
+        //Assign different attributes to the element.
+        driverName.setAttribute("type", "text");
+        driverName.setAttribute("name", "text");
+        driverName.setAttribute("id", "driverName" + driverCount);
+        
+
+        counter.setAttribute("type", "number");
+        counter.setAttribute("name", "bags" + driverCount);
+        counter.setAttribute("id", "bags" + driverCount);
+        counter.setAttribute("value", "0");
+
+        incrementButton.setAttribute("type", "button");
+        incrementButton.setAttribute("name", "increse");
+        incrementButton.setAttribute("id", "increse" + driverCount );
+        incrementButton.setAttribute("value", "increse");
+        incrementButton.setAttribute("onclick", "incrementValue(driverCount)");
+        
+
+        if(driverCount > 1){
+            var del = driverCount - 1;
+            document.getElementById("bags" + del).disabled = true; 
+            document.getElementById("increse" + del).disabled = true; 
+            document.getElementById("driverName" +  del).disabled = true; 
+        }
+
+        driverCount = driverCount + 1;
+
+        
+    
+        var foo = document.getElementById("fooBar");
+    
+        //Append the element in page (in span).
+        foo.appendChild(driverName);
+        foo.appendChild(counter);
+        foo.appendChild(incrementButton);
+
+
+    
+    }
+    </SCRIPT>
+    </HEAD>
+    <BODY>
+    <FORM>
+    <H2>Dynamically add element in form.</H2>
+    Select the element and hit Add to add it in form.
+    <BR/>
+    
+    <INPUT type="button" value="Add" onclick="add()"/>
+    
+    <span id="fooBar">&nbsp;</span>
+    
+    </FORM>
+    </BODY>
+    </HTML>
