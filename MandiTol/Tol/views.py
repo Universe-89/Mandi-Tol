@@ -51,13 +51,10 @@ def data(response):
             info.weight            = int(info.bags) * int(response.POST.get("bharti"))
             info.save()
 
-            print("#####################")
-            print(response.POST.get("driverName2"))
+
             last_gaddiwala_name = response.POST.get("driverName" + str(copy_count))
-            print(last_gaddiwala_name)
             last_bags_loaded = response.POST.get("bags" + str(copy_count))
             last_capacity = int(response.POST.get("capacity" + str(copy_count))) - int(last_bags_loaded)
-            print(last_bags_loaded)
   
 
             return render(response,"Tol/data.html",{"gaddi_wala":last_gaddiwala_name,"capacity":last_capacity})

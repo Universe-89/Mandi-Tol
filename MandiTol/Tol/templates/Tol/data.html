@@ -20,7 +20,7 @@
             // document.getElementById("bags" + count).disabled = true;
             document.getElementById("increse" + count).disabled = true;
             document.getElementById("driverName" + count).disabled = true;
-            document.getElementById("capacity"+ count).disabled = true;
+            document.getElementById("capacity"+ count).readOnly = true;
             document.getElementById("bags" + count).readOnly  = true;
             document.getElementById("addBut").style.display = "inline";
             
@@ -59,18 +59,21 @@
         capacity.setAttribute("id", "capacity"+driverCount);
         capacity.setAttribute("value", "0");
 
-        {% comment %} let del = driverCount - 1;
+         let del = driverCount - 1;
         document.getElementById("bags" + del).disabled = true;
         document.getElementById("increse" + del).disabled = true;
         document.getElementById("driverName" + del).disabled = true;
-        document.getElementById("bags" + del).readOnly  = true; {% endcomment %}
+        document.getElementById("bags" + del).readOnly  = true; 
         
-        driverCount = driverCount + 1;
+        
         console.log("546789975678966578434567890");
         console.log(driverCount);
 
         document.getElementById("addBut").style.display = "none";  
-        document.getElementById("totalGaadi").value = driverCount ;
+        
+        document.getElementById("totalGaadi").value = driverCount + 1;
+
+        driverCount = driverCount + 1;
 
 
         var foo = document.getElementById("allForm");
