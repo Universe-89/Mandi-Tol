@@ -1,0 +1,86 @@
+{% extends "Tol/base.html" %}
+{% block title %} TolData {%endblock%}
+{% block script %}
+<style>
+  p {
+    margin-right: 10px;
+  }
+  .side{
+    font-size: 12px;
+
+  }
+</style>
+{% endblock%}
+{% block content %}
+<h1 class="mt-2">&nbsp;&nbsp;Todays Tol</h1>
+<hr class="mt-0 mb-4" />
+<div class="container pt-4">
+  <style>
+    .blue {
+      background-color: #293250;
+      border-color : #FFD55A;
+      overflow: hidden;
+    }
+
+    h5 {
+      color: #6DD47E;
+    }
+
+    h6 {
+      color: #6DD47E;
+    }
+
+    input[type=text] , input[type=tel] {
+      color: #6DD47E;
+      background-color : #293250;
+    }
+  </style>
+  {% for tol in TolList %}
+  <div class="col-sm-6">
+    <div class="card blue">
+      <div class="card-body">
+        <h5 class="card-title">{{ tol.kisan_name }}</h5>
+        <div class="form-popup" id="myForm">
+          <form action="#" class="form-container" method="POST">
+            {% csrf_token %}
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                <p class="card-text"><b>Weight : </b></p>
+              </div>
+              <input type="number" class="border-0" value="{{ tol.weight }}" size="20" name="email">
+            </div>
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                <p class="card-text"><b>Item Name :  </b></p>
+              </div>
+              <input type="text" class="border-0" value="{{ tol.item_name }}" size="15" name="phone">
+            </div>
+            <div class="input-group mb-4">
+              <div class="input-group-prepend">
+                <p class="card-text"><b>Bags : </b></p>
+              </div>
+              <input type="text" class="border-0" value="{{ tol.bags }}" size="20" name="name">
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <p class="card-text"><b>Katta(in Kgs) : </b></p>
+                </div>
+                <input type="text" class="border-0" value="{{ tol.extra }}" size="20" name="name">
+              </div>
+  
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                  <p class="card-text"><b>Rate : </b></p>
+                </div>
+                <input type="text" class="border-0" value="{{ tol.rate }}" size="20" name="name">
+              </div>
+  
+
+            
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endblock%}

@@ -17,9 +17,9 @@
             document.getElementById('bags' + count).value = value;
         }
         else{
-            // document.getElementById("bags" + count).disabled = true;
-            document.getElementById("increse" + count).disabled = true;
-            document.getElementById("driverName" + count).disabled = true;
+            // document.getElementById("bags" + count).readOnly = true;
+            document.getElementById("increse" + count).readOnly = true;
+            document.getElementById("driverName" + count).readOnly = true;
             document.getElementById("capacity"+ count).readOnly = true;
             document.getElementById("bags" + count).readOnly  = true;
             document.getElementById("addBut").style.display = "inline";
@@ -39,8 +39,9 @@
 
         //Assign different attributes to the element.
         driverName.setAttribute("type", "text");
-        driverName.setAttribute("name", "driverName");
+        driverName.setAttribute("name", "driverName"+ driverCount);
         driverName.setAttribute("id", "driverName" + driverCount);
+        driverName.setAttribute("value", "driverName" + driverCount);
 
 
         counter.setAttribute("type", "number");
@@ -55,15 +56,15 @@
         incrementButton.setAttribute("onclick", "incrementValue(driverCount)");
 
         capacity.setAttribute("type", "number");
-        capacity.setAttribute("name", "capacity")
+        capacity.setAttribute("name", "capacity"+driverCount);
         capacity.setAttribute("id", "capacity"+driverCount);
         capacity.setAttribute("value", "0");
 
-         let del = driverCount - 1;
-        document.getElementById("bags" + del).disabled = true;
-        document.getElementById("increse" + del).disabled = true;
-        document.getElementById("driverName" + del).disabled = true;
-        document.getElementById("bags" + del).readOnly  = true; 
+        {% comment %} let del = driverCount - 1;
+        document.getElementById("bags" + del).readOnly = true;
+        document.getElementById("increse" + del).readOnly = true;
+        document.getElementById("driverName" + del).readOnly = true;
+        document.getElementById("bags" + del).readOnly  = true; {% endcomment %}
         
         
         console.log("546789975678966578434567890");
@@ -148,11 +149,13 @@
             <input type="number" name="capacity0" id="capacity0" value={{ capacity }}> Capacity<br> </input>
             <input type="button" id = "increse0" onclick="incrementValue(driverCount)" value="increse" />
         {% else %}
-            <input type="text" name="driverName0" id="driverName0" value="GaddiWala Name" > Gaddi Wala Name <br> </input>
+            <input type="text" name="driverName0" id="driverName0" value="driverName0" > Gaddi Wala Name <br> </input>
             <input type="number" name="bags0" id="bags0" value="0" > Bags Count<br> </input>
             <input type="number" name="capacity0" id="capacity0" value="0"> Capacity<br> </input>
             <input type="button" id = "increse0" onclick="incrementValue(driverCount)" value="increse" />
         {% endif %}
+
+        <input type="number" name="extraBharti" id="extraBharti" value="0" > Extra Bharti<br> </input>
 
         <input type="button" id= "addBut"  value="Add" onclick="add()" />
 
