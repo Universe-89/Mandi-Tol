@@ -1,0 +1,46 @@
+{% extends "Tol/base.html" %}
+{% block title %} TolData {%endblock%}
+{% block script %}
+<style>
+  p {
+    margin-right: 10px;
+  }
+  .side{
+    font-size: 12px;
+  }
+
+</style>
+{% endblock%}
+{% block content %}
+<body class="body">
+    <form name="form" method="POST" action="#">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            {% comment %} <input type="input" class="form-control" placeholder="Enter Fasal Name"
+                aria-describedby="basic-addon2" id="search_name" name="search_name">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit" name = "search">Search</button>
+            </div> {% endcomment %}
+        </div>
+        <table class="table" id = "data">
+            <thead class="thead-dark">
+                <tr>
+                    <th>NAME</th>
+                    <th>AMOUNT</th>
+                    <th>WEIGHT</th>
+                    <th>AVERAGE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in stock_list%}
+                <tr>
+                    <td>{{row.item_name}}</td>
+                    <td>{{row.total_amount}}</td>
+                    <td>{{row.total_weight}}</td>
+                    <td>{{row.average}}</td>
+
+                </tr>
+                {%endfor%}
+        </table>
+    </form>
+  {% endblock%}
