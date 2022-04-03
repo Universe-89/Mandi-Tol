@@ -31,7 +31,6 @@ def data(response):
                 info.bags = info.bags + int(response.POST.get("bags" + str(countInteger)))
                 countInteger = countInteger - 1
 
-            # count = count - 1;
 
             info.weight            = int(info.bags) * int(response.POST.get("bharti"))
             info.standardBharti    = response.POST.get("bharti")
