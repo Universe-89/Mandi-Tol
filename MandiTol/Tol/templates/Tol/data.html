@@ -60,11 +60,11 @@
         capacity.setAttribute("id", "capacity"+driverCount);
         capacity.setAttribute("value", "0");
 
-        {% comment %} let del = driverCount - 1;
+         let del = driverCount - 1;
         document.getElementById("bags" + del).readOnly = true;
         document.getElementById("increse" + del).readOnly = true;
         document.getElementById("driverName" + del).readOnly = true;
-        document.getElementById("bags" + del).readOnly  = true; {% endcomment %}
+        document.getElementById("bags" + del).readOnly  = true;
         
         
         console.log("546789975678966578434567890");
@@ -107,7 +107,14 @@
             <legend class="col-form-label col-sm-2 pt-0">Item</legend>
             <div class="col-sm-10">
                 <div class="form-check-inline">
-                    <input type="text" name="item_name" id="item_name" required />
+                   
+                <select type = "text" name="item_name" id="item_name" required>
+                    {% for item in itemList %}
+                    <option value = "{{item.item_name}}">{{item.item_name}}</option>
+                    {% endfor %}
+                </select>
+                    
+                    <!-- <input type="text" name="item_name" id="item_name" required /> -->
                 </div>
             </div>
         </div>
