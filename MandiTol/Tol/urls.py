@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('',views.start, name="tol"),
+    path('daily/',views.daily, name="daily"),
     path('data/',views.data, name="data"),
-    path('test/',views.test, name="data"),
+    path('test/',views.test, name="test"),
 ]

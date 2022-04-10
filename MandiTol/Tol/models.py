@@ -1,9 +1,9 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class TolDiary(models.Model):
-    # user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="emergencycontacts",null=True)
-    # contact = models.EmailField()
+
     kisan_name       = models.CharField(max_length=20)
     item_name        = models.CharField(max_length=20)
     weight           = models.IntegerField()
@@ -11,8 +11,7 @@ class TolDiary(models.Model):
     bags             = models.IntegerField()
     extra            = models.IntegerField()
     standardBharti   = models.IntegerField()
-    date_modified    = models.DateTimeField(auto_now_add=True)
-    # phone = PhoneField()
+    date_modified    = models.DateField(default=timezone.now)
     objects = models.Manager()
 
     def __str__(self):

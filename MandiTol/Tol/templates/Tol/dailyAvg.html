@@ -1,0 +1,70 @@
+{% extends "Tol/base.html" %}
+{% block title %} TolData {%endblock%}
+{% block script %}
+<style>
+  p {
+    margin-right: 10px;
+  }
+  .side{
+    font-size: 12px;
+  }
+
+</style>
+{% endblock%}
+{% block content %}
+<body class="body">
+    <form name="form" method="POST" action="#">
+        {% csrf_token %}
+        <table class="table" id = "data">
+            <tr> 
+                <td><legend >{{item_name}}</legend></td>
+                <td><legend >{{date}}</legend></td>
+            </tr>
+        </table>
+        <table class="table" id = "data">
+            <thead class="thead-dark">
+                <tr>
+                    <th>KACCHA AMOUNT</th>
+                    <td>{{total_amount}}</td>
+                </tr>
+                <tr>
+                    <th>WEIGHT</th>
+                    <td>{{total_weight}}</td>
+                </tr>
+                <tr>
+                    <th>BAGS</th>
+                    <td>{{total_bags}}</td>
+                </tr>
+                <tr>
+                    <th>HAMALI</th>
+                    <td>{{hamali}}</td>
+                </tr>
+                <tr>
+                    <th>GaDDI BHADA</th>
+                    <td>{{gaddi_bhada}}</td>
+                </tr>
+                <tr>
+                    <th>TOLA</th>
+                    <td>{{tola}}</td>
+                </tr>
+                <tr>
+                    <th>MandiTax</th>
+                    <td>{{mandi_tax}}</td>
+                </tr>
+                <tr>
+                    <th>KKF</th>
+                    <td>{{krishikalyan_ses}}</td>
+                </tr>
+                <tr>
+                    <th>AMOUNT</th>
+                    <td>{{Grand_amount}}</td>
+                </tr>
+                <tr>
+                    <th>AVERAGE</th>
+                    <td>{{average}}</td>
+                </tr>
+                </tr>
+            </thead>
+        </table>
+    </form>
+  {% endblock%}

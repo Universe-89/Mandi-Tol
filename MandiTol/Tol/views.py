@@ -4,6 +4,8 @@ from .models import *
 from decimal import *
 
 
+
+
 # Create your views here.
 def start(response):
     if (response.method == "POST"):
@@ -23,12 +25,60 @@ def start(response):
             stock_list = Stock_register.objects.all()
             return render(response,'Tol/stock.html', {"stock_list":stock_list})
 
+        elif (response.POST.get('dailyAverage')):
+            return redirect('/daily')
+
         else :
             return render(response, 'Tol/startTol.html', {})
 
-    return render(response, 'Tol/stock.html', {})
+    return render(response, 'Tol/startTol.html', {})
+
+def daily(response):
+    itemList = Items.objects.all()
+    if (response.method == "POST"):
+        
+        if (response.POST.get('submit')):
+            date = response.POST.get("tol_day")
+            item_name = response.POST.get("item_name")
+            daily_register = TolDiary.objects.filter(item_name = item_name) 
+
+            total_amount = 0
+            total_weight = 0
+            total_bags   = 0
+            dhare_amount = 0
+            expenses  = Items.objects.get(item_name = item_name)
+
+            for tol in daily_register : 
+                if(str(tol.date_modified) == str(date)):
+                
+                    dhare_amount = Decimal(tol.weight) * Decimal(tol.rate) / Decimal(100)
+                    total_amount = total_amount + dhare_amount
+                    total_weight = total_weight + Decimal(tol.weight)
+                    total_bags   = total_bags   + Decimal(tol.bags)
+
+
+            hamali = Decimal(total_bags) * Decimal(12)
+            gaddi_bhada = Decimal(total_bags) * Decimal(5)
+            tola = Decimal(total_bags) * Decimal(2)
+            mandi_tax = Decimal(total_amount) * Decimal(expenses.mandi_tax) / Decimal(100)
+            krishikalyan_ses = Decimal(total_amount) * Decimal(expenses.krishikalyan_ses) / Decimal(100)
+
+            Grand_amount = total_amount + mandi_tax + krishikalyan_ses + hamali + gaddi_bhada + tola
+            average = Grand_amount / total_weight * 100
+            average = "{:.2f}".format(average)
+
+            details = {"Grand_amount":Grand_amount,"total_weight":total_weight,"total_bags":total_bags,"hamali":hamali,"gaddi_bhada":gaddi_bhada,"tola":tola,
+                        "mandi_tax":mandi_tax,"krishikalyan_ses":krishikalyan_ses,"average":average,"total_amount":total_amount,"date":date,
+                        "item_name":item_name}
+
+            return render(response,'Tol/dailyAvg.html', details)
+
+            
+    return render(response,'Tol/daily.html', { "itemList":itemList})
+
 
 def data(response):
+    itemList = Items.objects.all()
     if (response.method == "POST"):
         if (response.POST.get('submit')):
             info                   = TolDiary()
@@ -42,7 +92,6 @@ def data(response):
                 info.bags = info.bags + int(response.POST.get("bags" + str(countInteger)))
                 countInteger = countInteger - 1
 
-            # count = count - 1;
 
             info.weight            = int(info.bags) * int(response.POST.get("bharti"))
             info.standardBharti    = response.POST.get("bharti")
@@ -98,11 +147,15 @@ def data(response):
             info.save()
   
 
-            return render(response,"Tol/data.html",{"gaddi_wala":last_gaddiwala_name,"capacity":last_capacity})
-    return render(response,"Tol/data.html",{"gaddi_wala":None,"capacity":None})
+            return render(response,"Tol/data.html",{"gaddi_wala":last_gaddiwala_name,"capacity":last_capacity, "itemList":itemList})
+    
+    return render(response,"Tol/data.html",{"gaddi_wala":None,"capacity":None, "itemList":itemList})
+
 
 def test(response):
     return render(response,"Tol/test.html",{})
+
+    select 
 
 
 def updateStock(item_name,weight,rate,bags):
@@ -128,24 +181,6 @@ def updateStock(item_name,weight,rate,bags):
     register.save()
 
 
-def query(name = None):
-    if name:
-        recipes = bhav.objects.filter(name__contains = name)
-    else:
-        recipes = bhav.objects.all()
-    return recipes
-def search(response):
-    
-    if(name == None) :
-        name = "FULLRESULT"
-
-    if name=='FULLRESULT':
-        result = query(None)
-    else:
-        result = query(name)
-
-    context = {"stock_list" : result}
-    return render(response,"frontpage/home.html",context)
 
 
 
