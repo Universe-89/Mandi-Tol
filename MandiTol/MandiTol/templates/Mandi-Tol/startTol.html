@@ -1,0 +1,26 @@
+{% extends "Tol/base.html" %}
+{% block title %} Home page {%endblock%}
+{% block content %}
+<form name="form" method="POST" action="#">
+    {% csrf_token %}
+    <button type="submit" name="start" id="start" value="start" class="button">
+        Start Tol
+    </button>
+    <button type="submit" name="TodaysTol" id="TodaysTol" value="TodaysTol" class="button">
+        Todays Tol Diary
+    </button>
+    <button type="submit" name="averages" id="averages" value="averages" class="button">
+        Stock Averages
+    </button>
+    <button type="submit" name="dailyAverage" id="dailyAverage" value="dailyAverage" class="button">
+        Stock Daily Averages
+    </button>
+
+    <button type="submit" name="createLedger" id="createLedger" value="createLedger" class="button">
+        Create Ledger
+    </button>
+
+
+    
+</form>
+{% endblock %}

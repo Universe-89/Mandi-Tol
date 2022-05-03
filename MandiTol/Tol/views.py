@@ -27,14 +27,27 @@ def start(response):
 
         elif (response.POST.get('dailyAverage')):
             return redirect('/daily')
-        
         elif (response.POST.get('createLedger')):
-            return redirect('/ledger')
-
+            return redirect('/ledger/createPage/')
         else :
-            return render(response, 'Tol/startTol.html', {})
+            return redirect('/tol')
 
-    return render(response, 'Tol/startTol.html', {})
+    return redirect('/tol')
+
+def TodaysTol(response):
+    TolList = TolDiary.objects.all().order_by('-date_modified')
+    return render(response,'Tol/TolDiaryData.html', {"TolList":TolList})
+
+def search(response):
+    Tname = response.POST.get("search_name")
+    stock_list = Stock_register.objects.get(item_name = name)
+    return render(response,'Tol/stock.html', {"stock_list":stock_list})
+
+def averages(response):
+    stock_list = Stock_register.objects.all()
+    return render(response,'Tol/stock.html', {"stock_list":stock_list})
+
+
 
 def daily(response):
     itemList = Items.objects.all()
