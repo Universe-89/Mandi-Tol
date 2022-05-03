@@ -27,6 +27,9 @@ def start(response):
 
         elif (response.POST.get('dailyAverage')):
             return redirect('/daily')
+        
+        elif (response.POST.get('createLedger')):
+            return redirect('/ledger')
 
         else :
             return render(response, 'Tol/startTol.html', {})
@@ -155,7 +158,7 @@ def data(response):
 def test(response):
     return render(response,"Tol/test.html",{})
 
-    select 
+
 
 
 def updateStock(item_name,weight,rate,bags):

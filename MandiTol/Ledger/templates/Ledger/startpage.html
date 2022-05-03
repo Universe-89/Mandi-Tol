@@ -1,0 +1,11 @@
+{% extends "Ledger/base.html" %}
+{% block title %} Home page {%endblock%}
+{% block content %}
+<form name="form" method="POST" action="#">
+    {% csrf_token %}
+    <button type="submit" name="create" id="create" value="create" class="button">
+        Create Ledger
+    </button>
+
+</form>
+{%endblock%}
