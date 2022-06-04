@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect,HttpResponseRedirect
 from django.http import HttpResponseRedirect
 from .models import *
+from Ledger.models import *
 from decimal import *
 
 
@@ -95,6 +96,7 @@ def daily(response):
 
 def data(response):
     itemList = Items.objects.all()
+    ledgerList = Ledger.objects.all()
     if (response.method == "POST"):
         if (response.POST.get('submit')):
             info                   = TolDiary()
@@ -163,9 +165,9 @@ def data(response):
             info.save()
   
 
-            return render(response,"Tol/data.html",{"gaddi_wala":last_gaddiwala_name,"capacity":last_capacity, "itemList":itemList})
+            return render(response,"Tol/data.html",{"gaddi_wala":last_gaddiwala_name,"capacity":last_capacity, "itemList":itemList ,"ledgerList":ledgerList})
     
-    return render(response,"Tol/data.html",{"gaddi_wala":None,"capacity":None, "itemList":itemList})
+    return render(response,"Tol/data.html",{"gaddi_wala":None,"capacity":None, "itemList":itemList ,"ledgerList":ledgerList})
 
 
 def test(response):
