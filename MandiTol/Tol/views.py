@@ -7,32 +7,32 @@ from decimal import *
 
 
 # Create your views here.
-def start(response):
-    if (response.method == "POST"):
-        if (response.POST.get('start')):
-            return redirect('/data')
+# def start(response):
+#     if (response.method == "POST"):
+#         if (response.POST.get('start')):
+#             return redirect('/data')
 
-        elif (response.POST.get('TodaysTol')):
-            TolList = TolDiary.objects.all().order_by('-date_modified')
-            return render(response,'Tol/TolDiaryData.html', {"TolList":TolList})
+#         elif (response.POST.get('TodaysTol')):
+#             TolList = TolDiary.objects.all().order_by('-date_modified')
+#             return render(response,'Tol/TolDiaryData.html', {"TolList":TolList})
 
-        elif (response.POST.get('search')):
-            name = response.POST.get("search_name")
-            stock_list = Stock_register.objects.get(item_name = name)
-            return render(response,'Tol/stock.html', {"stock_list":stock_list})
+#         elif (response.POST.get('search')):
+#             name = response.POST.get("search_name")
+#             stock_list = Stock_register.objects.get(item_name = name)
+#             return render(response,'Tol/stock.html', {"stock_list":stock_list})
 
-        elif (response.POST.get('averages')):
-            stock_list = Stock_register.objects.all()
-            return render(response,'Tol/stock.html', {"stock_list":stock_list})
+#         elif (response.POST.get('averages')):
+#             stock_list = Stock_register.objects.all()
+#             return render(response,'Tol/stock.html', {"stock_list":stock_list})
 
-        elif (response.POST.get('dailyAverage')):
-            return redirect('/daily')
-        elif (response.POST.get('createLedger')):
-            return redirect('/ledger/createPage/')
-        else :
-            return redirect('/tol')
+#         elif (response.POST.get('dailyAverage')):
+#             return redirect('/daily')
+#         elif (response.POST.get('createLedger')):
+#             return redirect('/ledger/createPage/')
+#         else :
+#             return render(response, 'Tol/startTol.html', {})
 
-    return redirect('/tol')
+#     return render(response, 'Tol/startTol.html', {})
 
 def TodaysTol(response):
     TolList = TolDiary.objects.all().order_by('-date_modified')
