@@ -12,6 +12,9 @@ def start(response):
         if (response.POST.get('start')):
             return redirect('tol/data')
 
+        elif (response.POST.get('AdatTol')):
+            return redirect('tol/AdatTolPage')
+
         elif (response.POST.get('TodaysTol')):
             return redirect('tol/TodaysTol')
 
@@ -26,6 +29,6 @@ def start(response):
         elif (response.POST.get('createLedger')):
             return redirect('/ledger/createPage/')
         else :
-            return render(response, 'Tol/startTol.html', {})
+            return render(response, 'MandiTol/startTol.html', {})
 
-    return render(response, 'Tol/startTol.html', {})
+    return render(response, 'MandiTol/startTol.html', {})

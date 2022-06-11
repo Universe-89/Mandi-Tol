@@ -16,15 +16,20 @@ class Ledger(models.Model):
 
 
 class Entry(models.Model):
-    party_name = models.ForeignKey(Ledger, on_delete=models.CASCADE)
-    item_name  = models.ForeignKey(Items, on_delete=models.CASCADE)
-    amount     = models.DecimalField(max_digits=10, decimal_places=2)
-    date_modified    = models.DateField(default=timezone.now)
-    isCredit   = models.BooleanField(default=True)
-    objects = models.Manager()
+    party_name      = models.ForeignKey(Ledger, on_delete=models.CASCADE)
+    item_name       = models.ForeignKey(Items, on_delete=models.CASCADE)
+    weight          = models.IntegerField(default=0)
+    bags            = models.IntegerField(default=0)
+    rate            = models.IntegerField(default=0)
+    amount          = models.DecimalField(max_digits=10, decimal_places=2)
+    extra           = models.IntegerField(default=0)
+    date_modified   = models.DateField(default=timezone.now)
+    standardBharti  = models.IntegerField(default=0)
+    isCredit        = models.BooleanField(default=True)
+    objects         = models.Manager()
 
     def __str__(self):
-        return str(self.party_name + str(isCredit))
+        return str(self.party_name)
 
 class TolDiaryAdat(models.Model):
 

@@ -1,10 +1,13 @@
-{% extends "Tol/base.html" %}
+{% extends "MandiTol/base.html" %}
 {% block title %} Home page {%endblock%}
 {% block content %}
 <form name="form" method="POST" action="#">
     {% csrf_token %}
     <button type="submit" name="start" id="start" value="start" class="button">
         Start Tol
+    </button>
+    <button type="submit" name="AdatTol" id="AdatTol" value="AdatTol" class="button">
+        Start Adat Tol
     </button>
     <button type="submit" name="TodaysTol" id="TodaysTol" value="TodaysTol" class="button">
         Todays Tol Diary

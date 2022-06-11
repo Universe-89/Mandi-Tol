@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect,HttpResponseRedirect
 from django.http import HttpResponseRedirect
 from .models import *
 from decimal import *
-
+from Ledger.models import *
+import datetime
 
 
 
@@ -35,11 +36,13 @@ from decimal import *
 #     return render(response, 'Tol/startTol.html', {})
 
 def TodaysTol(response):
-    TolList = TolDiary.objects.all().order_by('-date_modified')
+    currentDate = datetime.date.today()
+    TolList    = TolDiary.objects.filter(date_modified=currentDate)
+    #TolList = TolDiary.objects.all().order_by('-date_modified')
     return render(response,'Tol/TolDiaryData.html', {"TolList":TolList})
 
 def search(response):
-    Tname = response.POST.get("search_name")
+    name = response.POST.get("search_name")
     stock_list = Stock_register.objects.get(item_name = name)
     return render(response,'Tol/stock.html', {"stock_list":stock_list})
 
@@ -171,6 +174,83 @@ def data(response):
 def test(response):
     return render(response,"Tol/test.html",{})
 
+def AdatTolPage(response):
+    itemList = Items.objects.all()
+    agentList = Ledger.objects.all()
+    if (response.method == "POST"):
+        if (response.POST.get('submit')):
+            info                   = Entry()
+            item                   = response.POST.get("item_name")
+            info.party_name        = Ledger.objects.get(party_name = response.POST.get("Agent_name"))
+            info.item_name         = Items.objects.get(item_name =  response.POST.get("item_name"))
+            info.rate              = response.POST.get("rate")
+            count                  = response.POST.get("totalGaadi")
+            countInteger = int(count) - 1
+            info.bags  = 0
+            while(countInteger>=0):
+                info.bags = info.bags + int(response.POST.get("bags" + str(countInteger)))
+                countInteger = countInteger - 1
+
+
+            info.weight            = int(info.bags) * int(response.POST.get("bharti"))
+            info.standardBharti    = response.POST.get("bharti")
+
+            extraBharti = int(response.POST.get("extraBharti"))
+            info.extra = extraBharti
+
+            if(extraBharti != 0):
+                info.weight = info.weight + extraBharti
+                info.bags = info.bags + 1
+
+            info.amount = bill(item,info.weight,info.rate,info.bags)
+
+            info.save()
+
+            return redirect('/')
+
+        if (response.POST.get('next')):
+            info                   = Entry()
+            info.party_name        = response.POST.get("Agent_name")
+            info.item_name         = response.POST.get("item_name")
+            info.rate              = response.POST.get("rate")
+            count                  = response.POST.get("totalGaadi")
+            countInteger = int(count) - 1
+            copy_count = countInteger
+            info.bags  = 0
+            while(countInteger>=0):
+                info.bags = info.bags + int(response.POST.get("bags" + str(countInteger)))
+                countInteger = countInteger - 1
+
+            # count = count - 1;
+
+            info.weight            = int(info.bags) * int(response.POST.get("bharti"))
+            info.standardBharti    = response.POST.get("bharti")
+            
+
+
+            last_gaddiwala_name = response.POST.get("driverName"+ str(copy_count)) 
+            last_bags_loaded = response.POST.get("bags" + str(copy_count))
+            last_capacity = int(response.POST.get("capacity" + str(copy_count))) - int(last_bags_loaded)
+
+            extraBharti = int(response.POST.get("extraBharti"))
+            info.extra = extraBharti
+
+            if(extraBharti != 0):
+                info.weight = info.weight + extraBharti
+                last_capacity = last_capacity - 1
+                info.bags = info.bags + 1
+
+            info.amount = bill(item,info.weight,info.rate,info.bags)
+
+
+            info.save()
+  
+
+            return render(response,"Tol/AdatTolPage.html",{"gaddi_wala":last_gaddiwala_name,"capacity":last_capacity, "itemList":itemList, "agentList":agentList})
+    
+    return render(response,"Tol/AdatTolPage.html",{"gaddi_wala":None,"capacity":None, "itemList":itemList, "agentList":agentList})
+
+
 
 
 
@@ -182,8 +262,7 @@ def updateStock(item_name,weight,rate,bags):
     hamali = Decimal(bags) * Decimal(12)
     gaddi_bhada = Decimal(bags) * Decimal(5)
     tola = Decimal(bags) * Decimal(2)
-    dhare_amount = dhare_amount + mandi_tax + krishikalyan_ses + hamali + gaddi_bhada + tola
-
+    dhare_amount = dhare_amount + mandi_tax + krishikalyan_ses + hamali + gaddi_bhada + tola 
     register  = Stock_register.objects.get(item_name = item_name)    
     amount_new = Decimal(register.total_amount) + dhare_amount
     weight_new = Decimal(register.total_weight) + Decimal(weight)
@@ -195,6 +274,19 @@ def updateStock(item_name,weight,rate,bags):
     register.average = average_new
 
     register.save()
+
+def bill(item_name,weight,rate,bags):
+    expenses  = Items.objects.get(item_name = item_name)
+    dhare_amount = Decimal(weight) * Decimal(rate) / Decimal(100)
+    mandi_tax = Decimal(dhare_amount) * Decimal(expenses.mandi_tax) / Decimal(100)
+    krishikalyan_ses = Decimal(dhare_amount) * Decimal(expenses.krishikalyan_ses) / Decimal(100)
+    hamali = Decimal(bags) * Decimal(9)
+    aadat = Decimal(dhare_amount)*Decimal(expenses.aadat)/Decimal(100)
+
+    NetBillAmount = dhare_amount + mandi_tax + krishikalyan_ses + aadat -hamali
+
+    return NetBillAmount
+
 
 
 
