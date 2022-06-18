@@ -4,7 +4,7 @@ from .models import *
 from Ledger.models import *
 from decimal import *
 from Ledger.models import *
-import datetime
+from datetime import date
 
 
 
@@ -203,6 +203,8 @@ def AdatTolPage(response):
             if(extraBharti != 0):
                 info.weight = info.weight + extraBharti
                 info.bags = info.bags + 1
+            
+            info.billId  = addBill(info.party_name,info.item_name)
 
             info.amount = bill(item,info.weight,info.rate,info.bags)
 
@@ -285,9 +287,23 @@ def bill(item_name,weight,rate,bags):
     hamali = Decimal(bags) * Decimal(9)
     aadat = Decimal(dhare_amount)*Decimal(expenses.aadat)/Decimal(100)
 
-    NetBillAmount = dhare_amount + mandi_tax + krishikalyan_ses + aadat -hamali
+    NetBillAmount = dhare_amount + mandi_tax + krishikalyan_ses + aadat - hamali
 
     return NetBillAmount
+
+def addBill(partyName,itemName):
+
+    bill = BillMap.objects.filter(partyName=partyName,itemName=itemName,dateModified = date.today())
+
+    if(len(bill) != 0) :
+        return bill[0].billId 
+
+    billObj = BillMap()
+    billObj.partyName = partyName
+    billObj.itemName  = itemName
+    billObj.save()
+
+    return billObj.billId
 
 
 

@@ -18,6 +18,7 @@ class Ledger(models.Model):
 class Entry(models.Model):
     party_name      = models.ForeignKey(Ledger, on_delete=models.CASCADE)
     item_name       = models.ForeignKey(Items, on_delete=models.CASCADE)
+    billId          = models.IntegerField(default=0)
     weight          = models.IntegerField(default=0)
     bags            = models.IntegerField(default=0)
     rate            = models.IntegerField(default=0)
@@ -45,4 +46,27 @@ class TolDiaryAdat(models.Model):
 
     def __str__(self):
         return str(self.party_name + " " + str(self.date_modified))
+
+class BillMetaData(models.Model):
+    billId          = models.ForeignKey(Ledger, on_delete=models.CASCADE)
+    weight          = models.IntegerField(default=0)
+    bags            = models.IntegerField(default=0)
+    rate            = models.IntegerField(default=0)
+    amount          = models.DecimalField(max_digits=10, decimal_places=2)
+    extra           = models.IntegerField(default=0)
+    standardBharti  = models.IntegerField(default=0)
+    objects         = models.Manager()
+
+    def __str__(self):
+        return str(self.party_name)
+
+class BillMap(models.Model):
+    partyName       = models.ForeignKey(Ledger, on_delete=models.CASCADE)
+    itemName        = models.ForeignKey(Items, on_delete=models.CASCADE)
+    dateModified    = models.DateField(default=timezone.now)
+    billId          = models.AutoField(primary_key=True)
+    objects         = models.Manager()
+
+    def __str__(self):
+        return str(self.billId)
 

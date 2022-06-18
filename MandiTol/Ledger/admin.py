@@ -5,3 +5,4 @@ from . models import *
 admin.site.register(Ledger)
 admin.site.register(TolDiaryAdat)
 admin.site.register(Entry)
+admin.site.register(BillMap)
