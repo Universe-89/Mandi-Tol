@@ -305,6 +305,26 @@ def addBill(partyName,itemName):
 
     return billObj.billId
 
+def bills(response):
+    # this will take item name and will show all the bills for today
+    itemName = 'wheat'
+    billNums = BillMap.objects.filter(itemName=itemName,dateModified = date.today())
+
+    bills = [] 
+    
+    for billNum in billNums:
+        bills.extend((Entry.objects.filter(billId = int(billNum.billId))))
+
+    return render(response,"Tol/bills.html",{"bills":bills})
+    
+    
+    
+    
+
+
+    
+
+
 
 
 

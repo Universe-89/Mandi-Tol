@@ -1,0 +1,51 @@
+{% extends "Tol/base.html" %}
+{% block title %} TolData {%endblock%}
+{% block script %}
+<style>
+  p {
+    margin-right: 10px;
+  }
+  .side{
+    font-size: 12px;
+  }
+
+</style>
+{% endblock%}
+{% block content %}
+<body class="body">
+    <form name="form" method="POST" action="#">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            {% comment %} <input type="input" class="form-control" placeholder="Enter Fasal Name"
+                aria-describedby="basic-addon2" id="search_name" name="search_name">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit" name = "search">Search</button>
+            </div> {% endcomment %}
+        </div>
+        <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Weight</th>
+                <th scope="col">Bag</th>
+                <th scope="col">Rate</th>
+                <th scope="col">Amount</th>
+  
+              </tr>
+            </thead>
+            <tbody>
+                {% for bill in bills %}
+                <tr>
+                    <td>{{bill.party_name}}</td>
+                    <td>{{bill.weight}}</td>
+                    <td>{{bill.bags}}</td>
+                    <td>{{bill.rate}}</td>
+                    <td>{{bill.amount}}</td>
+
+                </tr>
+                {%endfor%}
+
+            </tbody>
+          </table>
+    </form>
+  {% endblock%}
