@@ -30,7 +30,7 @@ class Entry(models.Model):
     objects         = models.Manager()
 
     def __str__(self):
-        return str(self.party_name)
+        return str(str(self.party_name) + " " + str(self.item_name))
 
 class TolDiaryAdat(models.Model):
 
@@ -68,5 +68,5 @@ class BillMap(models.Model):
     objects         = models.Manager()
 
     def __str__(self):
-        return str(self.billId)
+        return str(str(self.billId) + " " +str(self.partyName) + " " + str(self.itemName))
 
