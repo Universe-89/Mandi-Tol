@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect,HttpResponseRedirect
 from django.http import HttpResponseRedirect
 
 from decimal import *
+from datetime import date
 
-
+from Ledger.models import *
 
 
 # Create your views here.
@@ -28,6 +29,12 @@ def start(response):
             return redirect('tol/daily')
         elif (response.POST.get('createLedger')):
             return redirect('/ledger/createPage/')
+
+        elif (response.POST.get('showBills')):
+            return redirect('tol/bill')
+        
+        elif (response.POST.get('Khatabook')):
+            return redirect('tol/Khatabook')
         else :
             return render(response, 'MandiTol/startTol.html', {})
 

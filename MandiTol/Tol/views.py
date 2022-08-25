@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect,HttpResponseRedirect
 from django.http import HttpResponseRedirect
+from requests import request
+from sympy import Max, re
 from .models import *
 from Ledger.models import *
 from decimal import *
 from Ledger.models import *
 from datetime import date
 
-
+from utils import utilityFunc
 
 # Create your views here.
 # def start(response):
@@ -296,7 +298,8 @@ def addBill(partyName,itemName):
     bill = BillMap.objects.filter(partyName=partyName,itemName=itemName,dateModified = date.today())
 
     if(len(bill) != 0) :
-        return bill[0].billId 
+    
+         return bill[0].billId 
 
     billObj = BillMap()
     billObj.partyName = partyName
@@ -304,6 +307,42 @@ def addBill(partyName,itemName):
     billObj.save()
 
     return billObj.billId
+    
+
+
+
+def bills(response):
+    #  This function is based on idea of sorting the bills on the basis of "item purchased and the agent"
+    #  on the single day. 
+    if(response.method=='POST'):
+        itemName = response.POST.get("item")
+        print(itemName)
+        bills = utilityFunc.getDaywiseAdatPurchaseBillDetails(itemName)
+        return render(response,"Tol/bills.html",{"bills":bills})
+    today = date.today()
+    todaysItemsList = []
+    itemDict = BillMap.objects.filter(dateModified=today).values('itemName').distinct()  
+    for item in itemDict:
+        todaysItemsList.append(item['itemName'])
+    return render(response,'Tol/todayItems.html',{"todaysItemsList":todaysItemsList})
+    
+    
+def Khatabook(response):
+    # function for Credit debit 
+    if(response.method=='POST'):
+        selectedLedger = response.POST.get("sel")
+        print(selectedLedger)
+        pass
+    ledgerList = Ledger.objects.all()
+    itemList = Items.objects.all()
+    return render(response, 'tol/ledgerList.html', {"ledgerList":ledgerList,"itemList":itemList})
+
+
+    
+
+
+    
+
 
 
 

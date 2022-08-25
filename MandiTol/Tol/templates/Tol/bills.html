@@ -1,0 +1,56 @@
+{% extends "Tol/base.html" %}
+{% block title %} TolData {%endblock%}
+{% block script %}
+<style>
+  p {
+    margin-right: 10px;
+  }
+  .side{
+    font-size: 12px;
+  }
+
+</style>
+{% endblock%}
+{% block content %}
+<body class="body">
+    <form name="form" method="POST" action="#">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            {% comment %} <input type="input" class="form-control" placeholder="Enter Fasal Name"
+                aria-describedby="basic-addon2" id="search_name" name="search_name">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit" name = "search">Search</button>
+            </div> {% endcomment %}
+        </div>
+      {% for bill in bills %}  
+        <table class="table table-sm">
+            <thead>
+              {% for entry in bill|slice:":1" %}
+              <h2>{{entry.party_name}}</h2><h2>#Billid = {{entry.billId}}</h2><h2>{{entry.date_modified}}</h2>
+              {%endfor%}
+              <tr>
+                <!-- <th scope="col">Name</th> -->
+                <th scope="col">Weight</th>
+                <th scope="col">Bag</th>
+                <th scope="col">Rate</th>
+                <th scope="col">Amount</th>
+  
+              </tr>
+            </thead>
+            <tbody>
+                {% for entry in bill %}
+                <tr>
+                    <!-- <td>{{entry.party_name}}</td> -->
+                    <td>{{entry.weight}}</td>
+                    <td>{{entry.bags}}</td>
+                    <td>{{entry.rate}}</td>
+                    <td>{{entry.amount}}</td>
+
+                </tr>
+                {%endfor%}
+
+            </tbody>
+          </table>
+      {%endfor%}      
+    </form>
+  {% endblock%}

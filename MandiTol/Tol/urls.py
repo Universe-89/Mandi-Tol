@@ -11,6 +11,7 @@ urlpatterns = [
     path('TodaysTol/',views.TodaysTol, name="TodaysTol"),
     path('search/',views.search, name="search"),
     path('averages/',views.averages, name="averages"),
-
+    path('bill/',views.bills, name="bill"),
+    path('Khatabook',views.Khatabook, name = "Khatabook"),
     
 ]

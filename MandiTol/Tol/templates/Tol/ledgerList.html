@@ -1,0 +1,56 @@
+{% extends "Tol/base.html" %}
+{% block title %} List Of Ledgers {%endblock%}
+{% block script %}
+<style>
+  p {
+    margin-right: 10px;
+  }
+  .side{
+    font-size: 12px;
+  }
+
+</style>
+{% endblock%}
+{% block content %}
+<body class="body">
+    <form name="form" method="POST" action="#">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            {% comment %} <input type="input" class="form-control" placeholder="Enter Fasal Name"
+                aria-describedby="basic-addon2" id="search_name" name="search_name">
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit" name = "search">Search</button>
+            </div> {% endcomment %}
+        </div>
+
+        <table class="table table-sm">
+            <thead>
+
+              <tr>
+                <!-- <th scope="col">Name</th> -->
+                <th scope="col">Name</th>
+                <th scope = "col">Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for ledger in ledgerList %}
+                <tr>
+                    <!-- <td>{{entry.party_name}}</td> -->
+                    <td><button class="btn btn-outline-primary" type="submit" name="sel" id="sel" value="{{ledger.party_name}}" class="button">{{ledger.party_name}}</button></td>
+
+
+                </tr>
+                {%endfor%}
+                {% for item in itemList %}
+                <tr>
+                    <!-- <td>{{entry.party_name}}</td> -->
+                    <td><button class="btn btn-outline-primary" type="submit" name="selected" id="selected" value="{{item.item_name}}" class="button">{{item.item_name}}</button></td>
+
+
+                </tr>
+                {%endfor%}
+
+            </tbody>
+          </table>
+    </form>
+  {% endblock%}

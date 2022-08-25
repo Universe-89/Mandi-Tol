@@ -3,6 +3,5 @@ from . models import *
 
 # Register your models here.
 admin.site.register(Ledger)
-admin.site.register(TolDiaryAdat)
 admin.site.register(Entry)
 admin.site.register(BillMap)
