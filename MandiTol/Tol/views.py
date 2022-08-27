@@ -216,8 +216,9 @@ def AdatTolPage(response):
 
         if (response.POST.get('next')):
             info                   = Entry()
-            info.party_name        = response.POST.get("Agent_name")
-            info.item_name         = response.POST.get("item_name")
+            item                   = response.POST.get("item_name")
+            info.party_name        = Ledger.objects.get(party_name = response.POST.get("Agent_name"))
+            info.item_name         = Items.objects.get(item_name =  response.POST.get("item_name"))
             info.rate              = response.POST.get("rate")
             count                  = response.POST.get("totalGaadi")
             countInteger = int(count) - 1

@@ -16,11 +16,11 @@ def createPage(response):
         if(response.POST.get('submit')):
             info = Ledger()
             info.party_name = response.POST.get('name')
-            info.partyAddress = response.POST.get('add')
-            info.partyPincode = response.POST.get('pcode')
-            info.partyCity  = response.POST.get('city')
-            info.partyState = response.POST.get('state')
-            info.partyOpBal = response.POST.get('opbal')
+            info.party_address = response.POST.get('add')
+            info.party_pincode = response.POST.get('pcode')
+            info.party_city  = response.POST.get('city')
+            info.party_state = response.POST.get('state')
+            info.party_opBal = response.POST.get('opbal')
 
             info.save()
 
