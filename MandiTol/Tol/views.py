@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect,HttpResponseRedirect
 from django.http import HttpResponseRedirect
 from requests import request
-from sympy import Max, re
+# from sympy import Max, re
 from .models import *
 from Ledger.models import *
 from decimal import *
